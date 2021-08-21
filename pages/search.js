@@ -2,6 +2,7 @@ import { useRouter } from 'next/dist/client/router';
 import { format } from 'date-fns';
 import Header from '../components/Header';
 import InfoCard from '../components/InfoCard';
+import Map from '../components/Map';
 import Footer from '../components/Footer';
 
 const Search = ({ searchResults }) => {
@@ -52,6 +53,10 @@ const Search = ({ searchResults }) => {
               )
             )}
           </div>
+        </section>
+
+        <section className='hidden xl:inline-flex xl:min-w-[600px]'>
+          <Map searchResults={searchResults} />
         </section>
       </main>
 
