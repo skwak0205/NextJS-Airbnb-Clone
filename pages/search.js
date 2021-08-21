@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const Search = () => {
+const Search = ({ searchResults }) => {
   const router = useRouter();
   const { location, startDate, endDate, noOfGuests } = router.query;
   const formattedStartDate = format(new Date(startDate), 'dd MMM yy');
@@ -12,7 +12,7 @@ const Search = () => {
 
   return (
     <div className='h-screen'>
-      <Header placeholder={`${location} | ${range} | ${noOfGuests}`} />
+      <Header placeholder={`${location} | ${range} | ${noOfGuests} guests`} />
 
       <main className='flex'>
         <section className='flex-grow pt-14 px-6'>
@@ -34,6 +34,10 @@ const Search = () => {
 
             <p className='button'>More filters</p>
           </div>
+
+          {searchResults.map((item) => (
+            <InfoCard />
+          ))}
         </section>
       </main>
 
@@ -43,3 +47,15 @@ const Search = () => {
 };
 
 export default Search;
+
+export async function getServerSideProps() {
+  const searchResults = await fetch('https://links.papareact.com/isz').then(
+    (res) => res.json()
+  );
+
+  return {
+    props: {
+      searchResults,
+    },
+  };
+}
